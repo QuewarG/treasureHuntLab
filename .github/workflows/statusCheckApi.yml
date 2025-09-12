@@ -2,7 +2,7 @@ name: ML API CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [trunk]
 
 jobs:
   build-and-test:
