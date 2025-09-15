@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-miguel
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-miguel
+  template:
+    metadata:
+      labels:
+        app: treasure-miguel
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/mamp29/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — Miguel"
+            - name: STUDENT
+              value: "Miguel Muñoz 2274590"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "748fa1b79957f6e17be1decc2301008cc5d078a70795939fdaab24851dfe1da1"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: miguel-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-miguel
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-miguel
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      # nodePort: 31080   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
+
