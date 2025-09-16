@@ -26,7 +26,7 @@ spec:
             - name: SALT
               value: "DS3univalle"
             - name: KEY_HASH
-              value: "748fa1b79957f6e17be1decc2301008cc5d078a70795939fdaab24851dfe1da1"
+              value: "58e90841e22f93fab9ffadeaad01dec797f71ff12e2195c45f8b0966be362698"
             - name: CLUE
               valueFrom:
                 secretKeyRef:
@@ -45,6 +45,6 @@ spec:
     - name: http
       port: 80
       targetPort: 80
-      # nodePort: 31080   # (opcional) fija uno en el rango 30000–32767
+      nodePort: 32380   # (opcional) fija uno en el rango 30000–32767
   type: NodePort
 
