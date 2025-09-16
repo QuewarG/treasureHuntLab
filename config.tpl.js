@@ -1,7 +1,7 @@
 window.CONFIG = {
-  title: "$Treasura Hunt Sebas",
-  student: "Sebastian Oviedo 2510104",
+  title: "$Treasura Hunt johan",
+  student: "Johan Sebastian Acosta Restrepo",
   salt: "DS3univalle",
-  keyHash: "e104d7f24d764dc3621cf3268dd81b4fd08900722fe14e2af64dd952913c9950",
-  clue: "SALCHIPAPA"
+  keyHash: "0bd200435af8503ba20a9a0e65d0f19c61f7e46a988b0bb7b1067079c70a1dfd",
+  clue: "dreams"
 };

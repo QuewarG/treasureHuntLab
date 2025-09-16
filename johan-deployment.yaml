@@ -1,46 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: treasure-sebas
+  name: treasure-johan
   namespace: treasure-hunt
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: treasure-sebas
+      app: treasure-johan
   template:
     metadata:
       labels:
-        app: treasure-sebas
+        app: treasure-johan
     spec:
       containers:
         - name: web
-          image: oviedosebastian/treasure-new:latest
+          image: docker.io/jsar/treasure-new:johan-v1
           ports:
             - containerPort: 80
           env:
             - name: TITLE
-              value: "Treasura Hunt Sebas"
+              value: "Treasura Hunt johan"
             - name: STUDENT
-              value: "Sebastian Oviedo 2510104"
+              value: "Johan Sebastian Acosta Restrepo"
             - name: SALT
               value: "DS3univalle"
             - name: KEY_HASH
-              value: "e104d7f24d764dc3621cf3268dd81b4fd08900722fe14e2af64dd952913c9950"
+              value: "c3047b86a39b75a5abb079ef1f7ad74fe846c17bbc947a09c7c3fb61b47a41a1"
             - name: CLUE
               valueFrom:
                 secretKeyRef:
-                  name: sebas-clue
+                  name: johan-clue
                   key: CLUE
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: treasure-sebas
+  name: treasure-johan
   namespace: treasure-hunt
 spec:
   selector:
-    app: treasure-sebas
+    app: treasure-johan
   ports:
     - name: http
       port: 80
