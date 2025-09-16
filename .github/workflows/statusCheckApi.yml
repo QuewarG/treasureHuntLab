@@ -17,16 +17,13 @@ jobs:
         run: docker build -t ml-api .
 
       - name: Ejecutar contenedor
-        run: docker run -d -p 8000:8000 --name ml-api-container ml-api
+        run: docker run -d -p 8000:80 --name ml-api-container ml-api
 
       - name: Esperar arranque del API
         run: sleep 10
 
       - name: Probar predicción
-        run: |
-          curl -X POST http://localhost:8000/prediction/ \
-            -H "Content-Type: application/json" \
-            -d '{"hour": 10, "day": 3}'
+        run: curl -f http://localhost:8080/ | grep "Treasure Hunt"
 
       - name: Detener contenedor
         run: docker stop ml-api-container && docker rm ml-api-container
