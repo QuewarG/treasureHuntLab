@@ -23,7 +23,7 @@ jobs:
         run: sleep 10
 
       - name: Probar predicción
-        run: curl -f http://localhost:8080/ | grep "Treasure Hunt"
+        run: curl -f http://localhost:8000/ | grep "Treasure Hunt"
 
       - name: Detener contenedor
         run: docker stop ml-api-container && docker rm ml-api-container
