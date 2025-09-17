@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: ghcr.io/mamp29/treasure-new:latest
+          image: docker.io/ricardoerazo306/treasure-new:latest
           ports:
             - containerPort: 80
           env:
