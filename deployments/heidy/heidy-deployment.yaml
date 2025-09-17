@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-heidy
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-heidy
+  template:
+    metadata:
+      labels:
+        app: treasure-heidy
+    spec:
+      containers:
+        - name: web
+          image: docker.io/heidyliz/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — heidy"
+            - name: STUDENT
+              value: "Heidy Gelpud"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "913f41e1195186a67abfe044bcf540fc7d6971c30c1d95753aee5bf9f045fd81"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: heidy-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-heidy
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-heidy
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 32580   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
