@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-jose
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-jose
+  template:
+    metadata:
+      labels:
+        app: treasure-jose
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/hosestr/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — Jose"
+            - name: STUDENT
+              value: "Jose Fuertes 2224623"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "ee8b254232e93a3b1fb9168d3c71044bc08bd1d7496f4d16405fe26c5817b15d"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: jose-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-jose
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-jose
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 31777   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
