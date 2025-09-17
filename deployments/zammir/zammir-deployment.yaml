@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-zammir
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-zammir
+  template:
+    metadata:
+      labels:
+        app: treasure-zammir
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/zammir117/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — Johhan"
+            - name: STUDENT
+              value: "Johhan Zammir"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "d7bf7041705bcfc6f0e09e06b233299334db5b74010cd421a6371ba0ee12956b"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: zammir-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-zammir
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-zammir
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 32387   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
