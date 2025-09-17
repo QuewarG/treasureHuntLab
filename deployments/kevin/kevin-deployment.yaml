@@ -45,6 +45,6 @@ spec:
     - name: http
       port: 80
       targetPort: 80
-      nodePort: 32380   # (opcional) fija uno en el rango 30000–32767
+      nodePort: 32880   # (opcional) fija uno en el rango 30000–32767
   type: NodePort
 
