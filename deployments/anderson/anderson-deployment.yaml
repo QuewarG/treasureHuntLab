@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-anderson
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-anderson
+  template:
+    metadata:
+      labels:
+        app: treasure-anderson
+    spec:
+      containers:
+        - name: web
+          image: anpcdev/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — Anderson"
+            - name: STUDENT
+              value: "Anderson"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "d3ac345ddb2e0547f85db73442f0f3d25b2d9ae9cb3ff996329744686f4cfca2"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: anderson-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-anderson
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-anderson
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      # nodePort: 31080   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
