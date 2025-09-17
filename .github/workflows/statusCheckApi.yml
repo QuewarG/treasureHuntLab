@@ -3,6 +3,8 @@ name: ML API CI
 on:
   pull_request:
     branches: [trunk]
+    paths-ignore:
+      - 'config.tpl.js'
 
 jobs:
   build-and-test:
