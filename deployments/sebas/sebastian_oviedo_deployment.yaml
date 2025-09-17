@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: oviedosebastian/treasure-new:latest
+          image: oviedosebastian/treasure-new
           ports:
             - containerPort: 80
           env:
