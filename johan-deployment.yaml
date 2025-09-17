@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-johan
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-johan
+  template:
+    metadata:
+      labels:
+        app: treasure-johan
+    spec:
+      containers:
+        - name: web
+          image: docker.io/jsar/treasure-new:johan-v1
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasura Hunt johan"
+            - name: STUDENT
+              value: "Johan Sebastian Acosta Restrepo"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "c3047b86a39b75a5abb079ef1f7ad74fe846c17bbc947a09c7c3fb61b47a41a1"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: johan-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-johan
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-johan
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      # nodePort: 31080   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
+

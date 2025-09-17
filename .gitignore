@@ -1,0 +1,43 @@
+# === SO/editores ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.code-workspace
+
+# === Logs y temporales ===
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.tmp
+tmp/
+*.swp
+*.swo
+
+# === Entornos/credenciales locales ===
+.env
+.env.*
+.kube/
+*.kubeconfig
+.git-credentials
+
+# === Node/JS (por si agregas tooling) ===
+node_modules/
+dist/
+build/
+coverage/
+
+# === Python (por si usas scripts) ===
+__pycache__/
+*.pyc
+
+# === Docker ===
+*.tar
+
+# === Archivos generados por la app ===
+config.js     # se genera desde config.tpl.js en el contenedor
+clue.txt      # si lo creaste para fabricar el Secret
+
+# === NO ignores ===
+# .devcontainer/  (déjalo versionado para reproducir el entorno)
