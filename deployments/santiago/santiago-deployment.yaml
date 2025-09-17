@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-santiago
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-santiago
+  template:
+    metadata:
+      labels:
+        app: treasure-santiago
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/santiago/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — santiago"
+            - name: STUDENT
+              value: "Santiago Nunez"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "7ea96c043ee84d3d93f4efd963f62bf7fb08fbe509dd7a4d0dcfec078f055904"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: santiago-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-santiago
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-santiago
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 31253   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
