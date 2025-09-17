@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treasure-kevin
+  namespace: treasure-hunt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treasure-kevin
+  template:
+    metadata:
+      labels:
+        app: treasure-kevin
+    spec:
+      containers:
+        - name: web
+          image: kgiron/treasure-new:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: TITLE
+              value: "Treasure Hunt — Kevin"
+            - name: STUDENT
+              value: "Kevin Giron 2510102"
+            - name: SALT
+              value: "DS3univalle"
+            - name: KEY_HASH
+              value: "114b1dfbc5b7247bad49af27a90ca55d33745ebc562db81a1adc0b0b396ac0d5"
+            - name: CLUE
+              valueFrom:
+                secretKeyRef:
+                  name: kevin-clue
+                  key: CLUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treasure-kevin
+  namespace: treasure-hunt
+spec:
+  selector:
+    app: treasure-kevin
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 32380   # (opcional) fija uno en el rango 30000–32767
+  type: NodePort
+
